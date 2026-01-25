@@ -18,7 +18,8 @@
 #include "NewMatterConstraints.hpp"
 
 // For tag cells
-#include "CosmoHamTaggingCriterion.hpp"
+// #include "CosmoHamTaggingCriterion.hpp"
+#include "ChiAndPhiTaggingCriterion.hpp"
 
 // Problem specific includes
 #include "AMRReductions.hpp"
@@ -253,8 +254,8 @@ void CosmoLevel::computeTaggingCriterion(
     const FArrayBox &current_state_diagnostics)
 {
     double rho_mean = m_cosmo_amr.get_rho_mean();
-    BoxLoops::loop(CosmoHamTaggingCriterion(m_dx, m_p.tagging_center,
-                                            m_p.tagging_radius, rho_mean),
+    BoxLoops::loop(ChiAndPhiTaggingCriterion(m_dx, m_p.tagging_threshold_chi,
+                                            m_p.tagging_threshold_phi, rho_mean),
                    current_state_diagnostics, tagging_criterion);
 }
 void CosmoLevel::specificPostTimeStep()

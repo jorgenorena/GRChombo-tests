@@ -48,8 +48,8 @@ G_Newton = 1.
 
 # Scalar field initial data
 # These scalar field params make the Hubble length 10 times wavelength of the scalar field 
-scalar_amplitude = 1e-1 # same as dphi in solver
-scalar_mass = 1e-1 # same as used in solver
+v = 1
+lambda = 0.05
 
 # Lineout params
 lineout_num_points = 10
@@ -57,6 +57,8 @@ lineout_num_points = 10
 # Tagging params
 # tagging_center = 0 0 0
 # tagging_radius = 7
+tagging_threshold_chi = 0.01
+tagging_threshold_phi = 0.1
 
 #################################################
 # Grid parameters

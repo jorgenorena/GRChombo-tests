@@ -13,7 +13,9 @@ class Potential
   public:
     struct params_t
     {
-        double scalar_mass;
+        // double scalar_mass;
+        double v;
+        double lambda;
     };
 
   private:
@@ -29,10 +31,15 @@ class Potential
                            const vars_t<data_t> &vars) const
     {
         // The potential value at phi
-        V_of_phi = 0.5 * pow(m_params.scalar_mass * vars.phi, 2.0);
+        // V_of_phi = 0.5 * pow(m_params.scalar_mass * vars.phi, 2.0);
+        V_of_phi = 0.25*m_params.lambda\
+                   *(vars.phi*vars.phi - m_params.v*m_params.v)\
+                   *(vars.phi*vars.phi - m_params.v*m_params.v);
 
         // The potential gradient at phi
-        dVdphi = pow(m_params.scalar_mass, 2.0) * vars.phi;
+        // dVdphi = pow(m_params.scalar_mass, 2.0) * vars.phi;
+        dVdphi = m_params.lambda*vars.phi\
+                 *(vars.phi*vars.phi - m_params.v*m_params.v);
     }
 };
 

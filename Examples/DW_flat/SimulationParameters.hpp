@@ -31,15 +31,18 @@ class SimulationParameters : public SimulationParametersBase
         initial_params.center =
             center; // already read in SimulationParametersBase
         pp.load("G_Newton", G_Newton, 1.0);
+        pp.load("v", potential_params.v, 0.0);
+        pp.load("lambda", potential_params.lambda, 0.0);
         pp.load("scalar_amplitude", initial_params.amplitude, 0.1);
-        pp.load("scalar_mass", potential_params.scalar_mass, 0.1);
 
         // Lineout params
         pp.load("lineout_num_points", lineout_num_points, 10);
 
         // Tagging params
-        pp.load("tagging_center", tagging_center, center);
-        pp.load("tagging_radius", tagging_radius, L);
+        // pp.load("tagging_center", tagging_center, center);
+        // pp.load("tagging_radius", tagging_radius, L);
+        pp.load("tagging_threshold_chi", tagging_threshold_chi, 1e-2);
+        pp.load("tagging_threshold_phi", tagging_threshold_phi, 1e-1);
 
 #ifdef USE_AHFINDER
         double AH_guess =
@@ -50,17 +53,18 @@ class SimulationParameters : public SimulationParametersBase
 
     void check_params()
     {
-        warn_parameter("scalar_mass", potential_params.scalar_mass,
-                       potential_params.scalar_mass <
-                           0.2 / coarsest_dx / dt_multiplier,
-                       "oscillations of scalar field do not appear to be "
-                       "resolved on coarsest level");
+        // warn_parameter("scalar_mass", potential_params.scalar_mass,
+        //                potential_params.scalar_mass <
+        //                    0.2 / coarsest_dx / dt_multiplier,
+        //                "oscillations of scalar field do not appear to be "
+        //                "resolved on coarsest level");
     }
 
     // Initial data for matter and potential and BH
-    double G_Newton, tagging_radius;
+    // double G_Newton, tagging_radius;
+    double G_Newton, tagging_threshold_chi, tagging_threshold_phi;
     int lineout_num_points;
-    std::array<double, CH_SPACEDIM> tagging_center;
+    // std::array<double, CH_SPACEDIM> tagging_center;
     InitialScalarData::params_t initial_params;
     Potential::params_t potential_params;
     KerrBH::params_t kerr_params;
