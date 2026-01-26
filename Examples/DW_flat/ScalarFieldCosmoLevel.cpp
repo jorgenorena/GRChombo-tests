@@ -63,7 +63,8 @@ void CosmoLevel::initialData()
     // First set everything to zero then initial conditions for scalar field -
     // Set initial condition of inflaton, see details in Potential.hpp and
     // InitialScalarData.hpp
-    double my_scalar_mass = m_p.potential_params.scalar_mass;
+    // double my_scalar_mass = m_p.potential_params.scalar_mass;
+    double my_scalar_mass = 0.0;
     BoxLoops::loop(make_compute_pack(SetValue(0.),
                                      InitialScalarData(m_p.initial_params, m_dx,
                                                        my_scalar_mass)),
@@ -255,7 +256,7 @@ void CosmoLevel::computeTaggingCriterion(
 {
     double rho_mean = m_cosmo_amr.get_rho_mean();
     BoxLoops::loop(ChiAndPhiTaggingCriterion(m_dx, m_p.tagging_threshold_chi,
-                                            m_p.tagging_threshold_phi, rho_mean),
+                                            m_p.tagging_threshold_phi),
                    current_state_diagnostics, tagging_criterion);
 }
 void CosmoLevel::specificPostTimeStep()
