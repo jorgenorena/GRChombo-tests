@@ -137,7 +137,7 @@ extrapolating_vars = phi Pi
 # dt will be dx*dt_multiplier on each grid level
 dt_multiplier = 0.25
 stop_time = 100.
-max_steps = 4
+max_steps = 8
 
 # Spatial derivative order (only affects CCZ4 RHS)
 # In cosmology sixth order stencils are rarely use so the example only have fourth order
