@@ -19,7 +19,7 @@ restart_file = hdf5_LR/InitialDataFinal.3d.hdf5
 checkpoint_interval = 1000
 # set to 0 to turn off plot files (except at t=0 and t=stop_time)
 # set to -1 to never ever print plotfiles
-plot_interval = 500
+plot_interval = 4
 num_plot_vars = 7
 plot_vars = chi phi rho_scaled S_scaled K_scaled Ham Mom
 
@@ -137,7 +137,7 @@ extrapolating_vars = phi Pi
 # dt will be dx*dt_multiplier on each grid level
 dt_multiplier = 0.25
 stop_time = 100.
-max_steps = 8
+max_steps = 96
 
 # Spatial derivative order (only affects CCZ4 RHS)
 # In cosmology sixth order stencils are rarely use so the example only have fourth order
