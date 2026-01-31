@@ -157,8 +157,8 @@ eta = 1.0 # eta of gamma driver, should be of order ~1/M_ADM of spacetime
 
 # CCZ4 parameters
 formulation = 0 # 1 for BSSN, 0 for CCZ4
-kappa1 = 0.
-kappa2 = 0.
+kappa1 = 0.05
+kappa2 = 0.1
 kappa3 = 0.
 covariantZ4 = 1 # 0: keep kappa1; 1 [default]: replace kappa1 -> kappa1/lapse
 
