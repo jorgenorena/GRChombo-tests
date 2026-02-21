@@ -30,10 +30,15 @@ class SimulationParameters : public SimulationParametersBase
         // Initial scalar field data
         initial_params.center =
             center; // already read in SimulationParametersBase
+        Real thickness;
+        Real compactness_o_Ro;
         pp.load("G_Newton", G_Newton, 1.0);
-        pp.load("v", potential_params.v, 0.0);
-        pp.load("lambda", potential_params.lambda, 0.0);
+        pp.load("thickness", thickness, 0.0);
+        pp.load("compactness_o_Ro", compactness_o_Ro, 0.0);
         pp.load("scalar_amplitude", initial_params.amplitude, 0.1);
+
+        potential_params.v = sqrt((3.0/32.0/M_PI)*thickness*compactness_o_Ro);
+        potential_params.lambda = 2.0/(thickness*thickness)/(potential_params.v*potential_params.v);
 
         // Lineout params
         pp.load("lineout_num_points", lineout_num_points, 10);
