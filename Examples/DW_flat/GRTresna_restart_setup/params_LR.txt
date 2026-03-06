@@ -4,7 +4,7 @@
 #################################################
 # Filesystem parameters
 
-verbosity = 0
+verbosity = 3
 
 # location / naming of output files
 output_path = "Outputs_GRChombo" # Main path for all files. Must exist!
@@ -16,18 +16,18 @@ plot_prefix = Cosmop_
 restart_file = /home/jnorena/Outputs_GRTresna/InitialDataFinal.3d.hdf5
 
 # HDF5files are written every dt = L/N*dt_multiplier*checkpoint_interval
-checkpoint_interval = 1000
+checkpoint_interval = 0
 # set to 0 to turn off plot files (except at t=0 and t=stop_time)
 # set to -1 to never ever print plotfiles
-plot_interval = 500
-num_plot_vars = 7
-plot_vars = chi phi rho_scaled S_scaled K_scaled Ham Mom
+plot_interval = 1
+num_plot_vars = 8
+plot_vars = chi phi rho_scaled S_scaled K_scaled Ham Mom lapse
 
 # subpaths - specific directories for hdf5, pout, extraction data
 # (these are created at runtime)
-hdf5_subpath = "hdf5_HR"
-pout_subpath = "pout_HR"
-data_subpath = "data_HR"
+hdf5_subpath = "hdf5_GRChombo_DW_flat_LR"
+pout_subpath = "pout_GRChombo_DW_flat_LR"
+data_subpath = "data_GRChombo_DW_flat_LR"
 
 # change the name of output files
 # pout_prefix = "pout"
@@ -50,8 +50,8 @@ G_Newton = 1.
 # These scalar field params make the Hubble length 10 times wavelength of the scalar field 
 scalar_amplitude = 1e-1 # same as dphi in solver
 scalar_mass = 1e-1 # same as used in solver
-thickness = 2
-compactness_o_Ro = 0.03125
+thickness = 0.25
+compactness_o_Ro = 0.25
 
 # Lineout params
 lineout_num_points = 10
@@ -71,7 +71,7 @@ lineout_num_points = 10
 # 'N2' or 'N2_full' and 'N3' or 'N3_full' ( then dx_coarsest = L/N(max) )
 # NB - the N values need to be multiples of the block_factor
 N_full = 64
-L_full = 128
+L_full = 8
 
 # Maximum number of times you can regrid above coarsest level
 max_level = 0 # There are (max_level+1) grids, so min is zero
@@ -99,7 +99,7 @@ min_box_size = 16
 # Boundary Conditions parameters
 
 #Periodic directions - 0 = false, 1 = true
-isPeriodic = 1 1 1
+isPeriodic = 0 0 0
 # if not periodic, then specify the boundary type
 # 0 = static, 1 = sommerfeld, 2 = reflective
 # 3 = extrapolating, 4 = mixed
@@ -136,8 +136,8 @@ extrapolating_vars = phi Pi
 
 # dt will be dx*dt_multiplier on each grid level
 dt_multiplier = 0.25
-stop_time = 100.
-# max_steps = 4
+stop_time = 0.2
+max_steps = 5
 
 # Spatial derivative order (only affects CCZ4 RHS)
 # In cosmology sixth order stencils are rarely use so the example only have fourth order
@@ -157,7 +157,7 @@ eta = 1.0 # eta of gamma driver, should be of order ~1/M_ADM of spacetime
 
 # CCZ4 parameters
 formulation = 0 # 1 for BSSN, 0 for CCZ4
-kappa1 = 0.
+kappa1 = 0.1
 kappa2 = 0.
 kappa3 = 0.
 covariantZ4 = 1 # 0: keep kappa1; 1 [default]: replace kappa1 -> kappa1/lapse
