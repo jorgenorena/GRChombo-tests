@@ -20,8 +20,8 @@ checkpoint_interval = 0
 # set to 0 to turn off plot files (except at t=0 and t=stop_time)
 # set to -1 to never ever print plotfiles
 plot_interval = 1
-num_plot_vars = 8
-plot_vars = chi phi rho_scaled S_scaled K_scaled Ham Mom lapse
+num_plot_vars = 10
+plot_vars = chi phi rho_scaled S_scaled K_scaled lapse Ham Mom Ham_abs Mom_abs
 
 # subpaths - specific directories for hdf5, pout, extraction data
 # (these are created at runtime)
@@ -70,7 +70,7 @@ lineout_num_points = 10
 # NB - if you have a non-cubic grid, you can specify 'N1' or 'N1_full',
 # 'N2' or 'N2_full' and 'N3' or 'N3_full' ( then dx_coarsest = L/N(max) )
 # NB - the N values need to be multiples of the block_factor
-N_full = 64
+N_full = 256
 L_full = 8
 
 # Maximum number of times you can regrid above coarsest level
@@ -104,8 +104,8 @@ isPeriodic = 0 0 0
 # 0 = static, 1 = sommerfeld, 2 = reflective
 # 3 = extrapolating, 4 = mixed
 # (see BoundaryConditions.hpp for details)
-# hi_boundary = 4 4 4
-# lo_boundary = 2 2 2
+hi_boundary = 3 3 3 
+lo_boundary = 2 2 2
 
 # if reflective boundaries selected, must set
 # parity of all vars (in order given by UserVariables.hpp)
@@ -118,7 +118,7 @@ vars_parity            = 0 0 4 6 0 5 0    #chi and hij
                          0 1 2 3          #Theta and Gamma
                          0 1 2 3 1 2 3    #lapse shift and B
                          0 0              #phi and Pi
-vars_parity_diagnostic = 0 1 2 3          #Ham and Mom
+vars_parity_diagnostic = 0 0 0 0 0 0 0 0 0         #Ham and Mom
 
 # if sommerfeld boundaries selected, must select
 # non zero asymptotic values
@@ -157,7 +157,7 @@ eta = 1.0 # eta of gamma driver, should be of order ~1/M_ADM of spacetime
 
 # CCZ4 parameters
 formulation = 0 # 1 for BSSN, 0 for CCZ4
-kappa1 = 0.1
+kappa1 = 0.2
 kappa2 = 0.
 kappa3 = 0.
 covariantZ4 = 1 # 0: keep kappa1; 1 [default]: replace kappa1 -> kappa1/lapse
