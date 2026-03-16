@@ -256,7 +256,7 @@ void CosmoLevel::computeTaggingCriterion(
 {
     double rho_mean = m_cosmo_amr.get_rho_mean();
     BoxLoops::loop(ChiAndPhiTaggingCriterion(m_dx, m_p.tagging_threshold_chi,
-                                             m_p.tagging_threshold_phi),
+                                            m_p.tagging_threshold_phi),
                    current_state, tagging_criterion);
 }
 void CosmoLevel::specificPostTimeStep()

@@ -39,3 +39,6 @@ log*
 *.patch
 *.log
 *.err
+
+# Output folders
+Examples/DW_flat/Output*/**
