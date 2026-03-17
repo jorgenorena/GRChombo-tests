@@ -53,6 +53,13 @@ int runGRChombo(int argc, char *argv[])
     if (sim_params.AH_activate)
     {
         AHSurfaceGeometry sph(sim_params.center);
+
+#ifdef USE_CHI_CONTOURS
+        std::string str_chi = std::to_string(
+            sim_params.AH_params.func_params.look_for_chi_contour);
+        sim_params.AH_params.stats_prefix = "stats_chi_" + str_chi + "_";
+        sim_params.AH_params.coords_prefix = "coords_chi_" + str_chi + "_";
+#endif
         cosmo_amr.m_ah_finder.add_ah(sph, sim_params.AH_initial_guess,
                                      sim_params.AH_params);
     }
