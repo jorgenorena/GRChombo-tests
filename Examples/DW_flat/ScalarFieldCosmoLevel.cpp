@@ -103,8 +103,11 @@ void CosmoLevel::initialData()
 // Things to do when restarting from a checkpoint file
 void CosmoLevel::postRestart()
 {
-    // only want to do this on the first restart and also every restart
-    if (m_time == 0.0)
+    // The mean values (rho_mean, S_mean, K_mean) are not stored in the
+    // checkpoint and CosmoMovingPunctureGauge needs K_mean in the very first
+    // RHS evaluation, so they must be recomputed on restart at ANY time (they
+    // are only correct once the finest level has been through here, but
+    // nothing uses them before that).
     {
         fillAllGhosts();
         Potential potential(m_p.potential_params);
@@ -144,7 +147,11 @@ void CosmoLevel::postRestart()
         pout() << "Calculated K mean as " << m_cosmo_amr.get_K_mean()
                << " at t = " << m_time << " on restart at level " << m_level
                << endl;
+    }
 
+    // lineout data extraction of the initial data, only meaningful at t = 0
+    if (m_time == 0.0)
+    {
         // Use AMR Interpolator and do lineout data extraction
         // pass the boundary params so that we can use symmetries
         AMRInterpolator<Lagrange<2>> interpolator(m_cosmo_amr, m_p.origin,

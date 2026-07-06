@@ -22,9 +22,12 @@
 class CosmoAMR : public GRAMR
 {
   private:
-    double m_K_mean;
-    double m_rho_mean;
-    double m_S_mean;
+    // initialised to zero as a safeguard: on restart at t != 0 these are
+    // recomputed in postRestart, but they must never be read uninitialised
+    // (K_mean enters the gauge RHS)
+    double m_K_mean = 0.;
+    double m_rho_mean = 0.;
+    double m_S_mean = 0.;
 
   public:
     PunctureTracker m_puncture_tracker;
