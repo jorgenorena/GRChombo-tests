@@ -38,6 +38,12 @@ using std::endl;
 #include "AHFinder.hpp"
 #endif
 
+class HorizonTestAMR : public BHAMR
+{
+  public:
+    void write_test_plot() const { writePlotFile(); }
+};
+
 int runApparentHorizonTest3D(int argc, char *argv[])
 {
     // Load the parameter file and construct the SimulationParameter class
@@ -47,10 +53,15 @@ int runApparentHorizonTest3D(int argc, char *argv[])
     GRParmParse pp(0, argv + argc, NULL, in_string.c_str());
     SimulationParameters sim_params(pp);
 
-    BHAMR bh_amr;
+    HorizonTestAMR bh_amr;
     DefaultLevelFactory<ApparentHorizonTest3DLevel> ah_test_level_fact(
         bh_amr, sim_params);
     setupAMRObject(bh_amr, ah_test_level_fact);
+
+#ifdef CH_USE_HDF5
+    if (sim_params.test_refine_xmax > 0.)
+        bh_amr.write_test_plot();
+#endif
 
     int status = 0;
 

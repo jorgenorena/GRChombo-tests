@@ -47,6 +47,9 @@ template <class SurfaceGeometry, class AHFunction> class PETScAHSolver
     void solve();
     SNESConvergedReason getConvergedReason() const;
 
+    double m_residual_l2 = NAN;
+    double m_residual_linf = NAN;
+
     void get_dmda_arr_t(Vec &localF, dmda_arr_t &in);
     // must be called at the end of the function that called 'get_dmda_arr_t'
     void restore_dmda_arr_t(Vec &localF, dmda_arr_t &in);

@@ -8,6 +8,7 @@
 
 #include "AMRLevel.H"
 #include "BoxLoops.hpp"
+#include "BoxIterator.H"
 #include "CoarseAverage.H"
 #include "DefaultLevelFactory.hpp"
 #include "FourthOrderFillPatch.H"
@@ -95,6 +96,24 @@ class ApparentHorizonTest3DLevel : public GRAMRLevel
                                          const FArrayBox &current_state)
     {
         tagging_criterion.setVal(0.);
+        if (m_p.test_refine_xmax > 0.)
+        {
+            for (BoxIterator bit(tagging_criterion.box()); bit.ok(); ++bit)
+            {
+                const IntVect &iv = bit();
+                double radius2 = 0.;
+                for (int d = 0; d < CH_SPACEDIM; ++d)
+                {
+                    double x = (iv[d] + 0.5) * m_dx - m_p.center[d];
+                    radius2 += x * x;
+                }
+                double x = (iv[0] + 0.5) * m_dx - m_p.center[0];
+                tagging_criterion(iv, 0) =
+                    (x < m_p.test_refine_xmax &&
+                     radius2 < m_p.test_refine_radius * m_p.test_refine_radius)
+                        ? 1. : 0.;
+            }
+        }
     };
 };
 

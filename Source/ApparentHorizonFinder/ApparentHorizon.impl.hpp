@@ -270,6 +270,14 @@ void ApparentHorizon<SurfaceGeometry, AHFunction>::solve(double a_dt,
     if (!good_to_go(a_dt, a_time))
         return;
 
+    if (m_params.verbose > AHParams::NONE)
+    {
+        auto old_precision = pout().precision(17);
+        pout() << "AH_SOLVE time=" << a_time << " horizon=" << m_stats
+               << std::endl;
+        pout().precision(old_precision);
+    }
+
     solver.m_interp.refresh_interpolator(
         do_print(a_dt, a_time),
         m_params.extra_vars); // (ALL CHOMBO ranks do it!!)

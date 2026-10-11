@@ -32,6 +32,10 @@ class SimulationParameters : public ChomboParameters
         pp.load("kerr_center", kerr_params.center, center);
         pp.load("kerr_spin_direction", kerr_params.spin_direction,
                 {0., 0., 1.});
+        // Optional analytic AMR test: refine only part of the horizon, so
+        // interpolation queries exercise both levels and their interface.
+        pp.load("test_refine_xmax", test_refine_xmax, -1.0);
+        pp.load("test_refine_radius", test_refine_radius, 0.0);
 
 #ifdef USE_AHFINDER
         pp.load("AH_initial_guess", initial_guess, kerr_params.mass * 0.5);
@@ -39,6 +43,7 @@ class SimulationParameters : public ChomboParameters
 #endif
     }
     KerrBH::params_t kerr_params;
+    double test_refine_xmax, test_refine_radius;
 
 #ifdef USE_AHFINDER
     double initial_guess;

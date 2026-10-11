@@ -103,8 +103,8 @@ void CosmoLevel::initialData()
 // Things to do when restarting from a checkpoint file
 void CosmoLevel::postRestart()
 {
-    // only want to do this on the first restart and also every restart
-    if (m_time == 0.0)
+    // These diagnostics and means are not stored in checkpoints. Recompute
+    // them at positive restart times as well as for GRTresna initial data.
     {
         fillAllGhosts();
         Potential potential(m_p.potential_params);
@@ -144,7 +144,10 @@ void CosmoLevel::postRestart()
         pout() << "Calculated K mean as " << m_cosmo_amr.get_K_mean()
                << " at t = " << m_time << " on restart at level " << m_level
                << endl;
+    }
 
+    if (m_time == 0.0)
+    {
         // Use AMR Interpolator and do lineout data extraction
         // pass the boundary params so that we can use symmetries
         AMRInterpolator<Lagrange<2>> interpolator(m_cosmo_amr, m_p.origin,
@@ -332,9 +335,8 @@ void CosmoLevel::specificPostTimeStep()
             interpolator.refresh();
 
             // set up the query and execute it
-            std::array<double, CH_SPACEDIM> extraction_origin = {
-                0., m_p.L / 2, m_p.L / 2}; // specified point {x \in [0,L],y \in
-                                           // [0,L], z \in [0,L]}
+            // The domain-wall centre is the corner of the reflected octant.
+            std::array<double, CH_SPACEDIM> extraction_origin = m_p.center;
             // rho lineout
             CustomExtraction rho_extraction(c_rho, m_p.lineout_num_points,
                                             m_p.L, extraction_origin, m_dt,
@@ -343,4 +345,11 @@ void CosmoLevel::specificPostTimeStep()
                                          m_p.data_path + "rho_lineout");
         }
     }
+
+#ifdef USE_AHFINDER
+    if (m_p.AH_activate && m_level == m_p.AH_params.level_to_run)
+    {
+        m_cosmo_amr.m_ah_finder.solve(m_dt, m_time, m_restart_time);
+    }
+#endif
 }

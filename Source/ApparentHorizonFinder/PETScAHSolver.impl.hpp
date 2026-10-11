@@ -538,6 +538,23 @@ void PETScAHSolver<SurfaceGeometry, AHFunction>::solve()
     // actual solve happens here!
     SNESSolve(m_snes, NULL, m_snes_soln);
 
+    // Read the residual retained by SNES, without another interpolation or
+    // function evaluation (inactive Chombo ranks are still servicing MPI).
+    Vec residual;
+    SNESGetFunction(m_snes, &residual, NULL, NULL);
+    PetscReal l2, linf;
+    VecNorm(residual, NORM_2, &l2);
+    VecNorm(residual, NORM_INFINITY, &linf);
+    m_residual_l2 = l2;
+    m_residual_linf = linf;
+    if (m_params.verbose > AHParams::NONE)
+    {
+        auto old_precision = pout().precision(17);
+        pout() << "AH_RESIDUAL l2=" << m_residual_l2
+               << " linf=" << m_residual_linf << std::endl;
+        pout().precision(old_precision);
+    }
+
     PetscInt its;
     SNESGetIterationNumber(m_snes, &its);
     if (m_params.verbose > AHParams::MIN)
@@ -557,6 +574,11 @@ PETScAHSolver<SurfaceGeometry, AHFunction>::getConvergedReason() const
 {
     SNESConvergedReason reason;
     SNESGetConvergedReason(m_snes, &reason);
+    if (!std::isfinite(m_residual_l2) || !std::isfinite(m_residual_linf))
+        return SNES_DIVERGED_FNORM_NAN;
+    if (reason > 0 && m_params.max_residual_norm >= 0. &&
+        m_residual_linf > m_params.max_residual_norm)
+        return SNES_DIVERGED_LOCAL_MIN;
     return reason;
 }
 

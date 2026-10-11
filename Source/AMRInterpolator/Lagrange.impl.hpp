@@ -107,7 +107,7 @@ bool Lagrange<Order, N_DIMS>::Stencil::operator==(
     const Lagrange<Order, N_DIMS>::Stencil &rhs) const
 {
     return (rhs.m_width == m_width) && (rhs.m_deriv == m_deriv) &&
-           (rhs.m_point_offset == m_point_offset) && (rhs.dx == m_dx);
+           (rhs.m_point_offset == m_point_offset) && (rhs.m_dx == m_dx);
 }
 
 template <int Order, int N_DIMS>

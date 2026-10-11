@@ -26,3 +26,7 @@ src_dirs := $(GRCHOMBO_SOURCE)/utils \
             $(GRCHOMBO_SOURCE)/Cosmology 
 
 include $(CHOMBO_HOME)/mk/Make.test
+
+# Parameter and matter headers alter class layouts: rebuild all local objects
+# when they change, including headers reached through templates.
+$(objects): $(wildcard *.hpp) $(wildcard $(GRCHOMBO_SOURCE)/ApparentHorizonFinder/*.hpp) $(GRCHOMBO_SOURCE)/Cosmology/CosmoAMR.hpp

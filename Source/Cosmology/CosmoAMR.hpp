@@ -22,9 +22,9 @@
 class CosmoAMR : public GRAMR
 {
   private:
-    double m_K_mean;
-    double m_rho_mean;
-    double m_S_mean;
+    double m_K_mean = 0.;
+    double m_rho_mean = 0.;
+    double m_S_mean = 0.;
 
   public:
     PunctureTracker m_puncture_tracker;

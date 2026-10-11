@@ -144,6 +144,11 @@ template <class AHFunction> struct AHParams_t
 
     int verbose; //!< print information during execution (default is 1)
 
+    // Optional acceptance limit for the infinity norm of the discrete
+    // nonlinear equation (r*expansion by default, regularity at the poles).
+    // Negative disables the extra limit; nonfinite residuals always fail.
+    double max_residual_norm;
+
     bool print_geometry_data; //!< print metric and extrinsic
                               //!< curvature of the AHs (default false)
 
@@ -213,8 +218,8 @@ void AHParams_t<AHFunction>::read_params(GRParmParse &pp,
 
     // Let's enforce the below as Katy had problems otherwise
     ChomboParameters::check_parameter("AH_num_ranks", num_ranks,
-                                      num_ranks <= numProc(),
-                                      "must be <= total number of ranks");
+                                      num_ranks >= 0 && num_ranks <= numProc(),
+                                      "must be >=0 and <= total number of ranks");
 
     ChomboParameters::check_parameter("AH_num_points_u", num_points_u,
                                       num_points_u > 0, "must be >0");
@@ -236,7 +241,7 @@ void AHParams_t<AHFunction>::read_params(GRParmParse &pp,
     // in case
     ChomboParameters::check_parameter(
         "AH_num_ranks", num_ranks,
-        (num_points_u * num_points_v) % num_ranks == 0,
+        (num_points_u * num_points_v) % actual_num_ranks == 0,
         "must divide AH_num_points_u * AH_num_points_v");
 #elif CH_SPACEDIM == 2
     ChomboParameters::check_parameter(
@@ -280,6 +285,7 @@ void AHParams_t<AHFunction>::read_params(GRParmParse &pp,
     pp.load("AH_stop_if_max_fails", stop_if_max_fails, false);
 
     pp.load("AH_verbose", verbose, (int)MIN);
+    pp.load("AH_max_residual_norm", max_residual_norm, -1.0);
     pp.load("AH_print_geometry_data", print_geometry_data, false);
     pp.load("AH_re_solve_at_restart", re_solve_at_restart, false);
     // load vars to write to coord files
