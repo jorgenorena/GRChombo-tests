@@ -142,6 +142,9 @@ class GRAMRLevel : public AMRLevel, public InterpSource<>
     /// Virtual function for the problem specific parts of postTimeStep
     virtual void specificPostTimeStep() {}
 
+    /// Problem-specific checks after regridding and restart-time bookkeeping.
+    virtual void specificPostRegrid(int a_base_level) {}
+
     /// (Pure) virtual function for the initial data calculation
     virtual void initialData() = 0;
 

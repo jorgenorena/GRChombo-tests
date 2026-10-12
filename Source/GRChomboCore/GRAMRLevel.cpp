@@ -368,6 +368,7 @@ void GRAMRLevel::postRegrid(int a_base_level)
         GRAMRLevel *coarser_gr_amr_level_ptr = gr_cast(m_coarser_level_ptr);
         m_restart_time = coarser_gr_amr_level_ptr->m_restart_time;
     }
+    specificPostRegrid(a_base_level);
 }
 
 // initialize grid

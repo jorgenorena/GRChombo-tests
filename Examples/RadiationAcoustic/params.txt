@@ -1,0 +1,37 @@
+# Pass B: a right-moving radiation wave in fixed flat spacetime.
+# These parameters produce one linear sound crossing, T=sqrt(3), at N1=32.
+G_Newton = 0
+radiation_rho0 = 0.75
+radiation_kappa = 1
+wave_amplitude = 1.e-5
+map_amplitude = 0.0
+thickness = 0.5
+compactness_o_Ro = 0.25
+q = 0
+N1 = 32
+N2 = 8
+N3 = 8
+L = 1.0
+max_level = 0
+max_box_size = 32
+min_box_size = 8
+regrid_interval = 0
+isPeriodic = 1 1 1
+dt_multiplier = 0.14433756729740643 # sqrt(3)/12; 12*N1 steps/crossing
+stop_time = 1.7320508075688772
+max_steps = 100000
+max_spatial_derivative_order = 4
+sigma = 0.1
+nan_check = 1
+AH_activate = 0
+verbosity = 0
+print_progress_only_to_rank_0 = 1
+chk_prefix = acoustic_
+plot_prefix = acousticp_
+checkpoint_interval = 192
+plot_interval = 96
+num_plot_vars = 21
+plot_vars = chi h11 h22 h33 psi_rad Pi_rad rho_rad rho_rest Srad1 Srad11 Srad22 Srad33 S_minus_E_rad sqrt_gamma current_proper timelike_margin grad_Pi grad_velocity rho_wall Ham Mom
+hdf5_subpath = hdf5
+data_subpath = data
+pout_subpath = pout
