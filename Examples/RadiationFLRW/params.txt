@@ -1,0 +1,50 @@
+# Pass A: homogeneous radiation plus a canonical wall at its true vacuum.
+# a(t0)=1; rho0 is the independent expansion normalization, H0 is derived.
+radiation_enabled = 1
+radiation_rho0 = 0.0011936620731892151 # H0=0.1 for G=1
+radiation_kappa = 1.0
+radiation_t0 = 0.0
+G_Newton = 1.0
+thickness = 0.5
+compactness_o_Ro = 0.25
+q = 0.0
+
+N = 8
+L = 8.0
+max_level = 0
+max_box_size = 8
+min_box_size = 8
+regrid_interval = 0
+isPeriodic = 1 1 1
+# Both radiation variables have even reflection parity (periodic test here).
+vars_parity = 0 0 4 6 0 5 0 0 0 4 6 0 5 0 0 1 2 3 0 1 2 3 1 2 3 0 0 0 0
+
+dt_multiplier = 0.25
+stop_time = 15.0 # a=2: rho falls by a factor 16
+max_steps = 100000
+max_spatial_derivative_order = 4
+formulation = 0
+kappa1 = 1.0
+kappa2 = 0.0
+kappa3 = 0.0
+covariantZ4 = 1
+sigma = 0.3
+lapse_coeff = 2.0
+lapse_power = 1.0
+lapse_advec_coeff = 1.0
+shift_advec_coeff = 0.0
+shift_Gamma_coeff = 0.75
+eta = 1.0
+nan_check = 1
+AH_activate = 0
+verbosity = 0
+print_progress_only_to_rank_0 = 1
+chk_prefix = flrw_
+plot_prefix = flrwp_
+checkpoint_interval = 20
+plot_interval = 20
+num_plot_vars = 13
+plot_vars = chi K lapse Theta phi Pi psi_rad Pi_rad rho_rad rho_wall Ham Mom timelike_margin
+hdf5_subpath = hdf5
+data_subpath = data
+pout_subpath = pout

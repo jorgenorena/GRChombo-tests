@@ -92,6 +92,9 @@ class GRAMRLevel : public AMRLevel, public InterpSource<>
     DisjointBoxLayout loadBalance(const Vector<Box> &a_grids);
 
 #ifdef CH_USE_HDF5
+  protected:
+    // Examples may extend the checkpoint header while retaining the core
+    // component-layout checks and standard header fields.
     virtual void writeCheckpointHeader(HDF5Handle &a_handle) const;
 
     virtual void writeCheckpointLevel(HDF5Handle &a_handle) const;

@@ -71,7 +71,7 @@ class CCZ4RHS
 
   protected:
     const params_t m_params; //!< CCZ4 parameters
-    const gauge_t m_gauge;   //!< Class to compute gauge in rhs_equation
+    gauge_t m_gauge;         //!< Class to compute gauge in rhs_equation
     const double m_sigma;    //!< Coefficient for Kreiss-Oliger dissipation
     int m_formulation;
     double m_cosmological_constant;
@@ -93,6 +93,10 @@ class CCZ4RHS
      * cell; there should rarely be a need to call it directly.
      */
     template <class data_t> void compute(Cell<data_t> current_cell) const;
+
+    /// Install a configured gauge before the cell loop (e.g. an RK-stage
+    /// cosmological reference). Existing callers retain the constructor gauge.
+    void set_gauge(const gauge_t &a_gauge) { m_gauge = a_gauge; }
 
   protected:
     /// Calculates the rhs for CCZ4
