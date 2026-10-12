@@ -197,7 +197,8 @@ void CosmoLevel::prePlotLevel()
     ScalarFieldWithPotential scalar_field(potential);
     BoxLoops::loop(
         MatterConstraints<ScalarFieldWithPotential>(
-            scalar_field, m_dx, m_p.G_Newton, c_Ham, Interval(c_Mom, c_Mom)),
+            scalar_field, m_dx, m_p.G_Newton, c_Ham, Interval(c_Mom, c_Mom),
+            c_Ham_abs_sum, Interval(c_Mom_abs_sum, c_Mom_abs_sum)),
         m_state_new, m_state_diagnostics, EXCLUDE_GHOST_CELLS);
     CosmoDiagnostics<ScalarFieldWithPotential> cosmo_diagnostics(
         scalar_field, m_dx, m_p.G_Newton);

@@ -35,10 +35,20 @@ class SimulationParameters : public SimulationParametersBase
         pp.load("G_Newton", G_Newton, 1.0);
         pp.load("thickness", thickness, 0.0);
         pp.load("compactness_o_Ro", compactness_o_Ro, 0.0);
+        pp.load("q", potential_params.q, 0.0);
         pp.load("scalar_amplitude", initial_params.amplitude, 0.1);
+        if (!(std::isfinite(thickness) && thickness > 0.0 &&
+              std::isfinite(compactness_o_Ro) && compactness_o_Ro > 0.0))
+            MayDay::Error("DW requires positive finite thickness and compactness_o_Ro");
 
         potential_params.v = sqrt((3.0/32.0/M_PI)*thickness*compactness_o_Ro);
         potential_params.lambda = 2.0/(thickness*thickness)/(potential_params.v*potential_params.v);
+        const double phi_true = DomainWallPotential::true_vacuum(
+            potential_params.v, potential_params.lambda, potential_params.q);
+        pout() << "DW potential: q=" << potential_params.q
+               << " phi_true=" << phi_true
+               << " phi_false=" << DomainWallPotential::false_vacuum(potential_params.v, phi_true)
+               << std::endl;
 
         // Lineout params
         pp.load("lineout_num_points", lineout_num_points, 10);
