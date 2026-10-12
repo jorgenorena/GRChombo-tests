@@ -1,0 +1,61 @@
+# Pass D: inspect the freshly solved GRTresna initial slice without evolving.
+# a(t0)=1; rho0 is the independent expansion normalization, H0 is derived.
+radiation_enabled = 1
+radiation_rho0 = 0.0011936620731892151 # H0=0.1 for G=1
+radiation_kappa = 1.0
+radiation_t0 = 0.0
+G_Newton = 1.0
+thickness = 0.5
+compactness_o_Ro = 0.10
+Ro = 2
+wall_enabled = 1
+initial_data_residual_tolerance = 1e-5
+q = 0.0
+
+N = 64
+L = 8.0
+max_level = 0
+max_box_size = 32
+min_box_size = 8
+regrid_interval = 0
+isPeriodic = 0 0 0
+lo_boundary = 2 2 2
+hi_boundary = 3 3 3
+# Retain GRTresna's exported cubic ghosts for zero-step reconstruction.
+# Set handoff_refill_boundaries=1 for the separate linear-refill control.
+handoff_refill_boundaries = 0
+extrapolation_order = 1
+# Both radiation variables have even reflection parity.
+vars_parity = 0 0 4 6 0 5 0 0 0 4 6 0 5 0 0 1 2 3 0 1 2 3 1 2 3 0 0 0 0
+
+dt_multiplier = 0.25
+stop_time = 0
+max_steps = 0
+max_spatial_derivative_order = 4
+formulation = 0
+kappa1 = 1.0
+kappa2 = 0.0
+kappa3 = 0.0
+covariantZ4 = 1
+sigma = 0.3
+lapse_coeff = 2.0
+lapse_power = 1.0
+lapse_advec_coeff = 1.0
+shift_advec_coeff = 0.0
+shift_Gamma_coeff = 0.75
+eta = 1.0
+nan_check = 1
+AH_activate = 0
+verbosity = 0
+print_progress_only_to_rank_0 = 1
+chk_prefix = handoff_
+plot_prefix = handoffp_
+checkpoint_interval = 1
+plot_interval = 1
+num_plot_vars = 35
+plot_vars = chi h11 h12 h13 h22 h23 h33 K A11 A12 A13 A22 A23 A33 lapse phi Pi psi_rad Pi_rad rho_rad rho_wall rho_total Ham Mom Ham_abs Mom1 Mom2 Mom3 Mom_abs Ham_wall hybrid_defect timelike_margin S_minus_E_rad sqrt_gamma current_proper
+write_plot_ghosts = 0
+hdf5_subpath = hdf5
+data_subpath = data
+pout_subpath = pout
+restart_file = ../../../GRTresna-tests/Examples/RadiationID/Outputs_radiation/InitialDataFinal.3d.hdf5
